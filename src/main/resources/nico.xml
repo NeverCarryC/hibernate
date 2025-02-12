@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
+    <session-factory>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <property name="connection.url">sdsdsd</property>
+        <property name="connection.username"></property>
+        <property name="connection.password"></property>
+
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property><!--NO ES Obligatorio-->
+
+        <mapping class="model.Trabajador"></mapping>
+    </session-factory>
+</hibernate-configuration>
