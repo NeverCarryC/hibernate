@@ -6,6 +6,17 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "trabajadores")
+
+@NamedQueries(
+        {
+@NamedQuery(name = "Trabajador.findAll", query="FROM Trabajador"),
+@NamedQuery(name = "Trabajador.findByLocalidad", query = "From Trabajador WHERE direccion.localidad = :localidad"),
+                @NamedQuery(
+                        name = "Trabajador.findNombreCorreo",
+                        query = "SELECT t.nombre, t.correo FROM Trabajador t WHERE t.direccion.localidad = :localidad"
+                )
+})
+
 public class Trabajador implements Serializable {
 
     //pk
@@ -25,12 +36,19 @@ public class Trabajador implements Serializable {
     @Column
     private int telefono;
 
-    public Trabajador(int telefono, String correo, String apellido, String nombre) {
-        this.telefono = telefono;
-        this.correo = correo;
-        this.apellido = apellido;
+
+    @Embedded
+    private Direccion direccion;
+
+    public Trabajador(String nombre, String apellido, String correo, int telefono, Direccion dir) {
         this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.direccion = dir;
     }
+
+    public Trabajador(){}
 
     @Override
     public String toString() {
@@ -40,10 +58,9 @@ public class Trabajador implements Serializable {
                 ", apellido='" + apellido + '\'' +
                 ", correo='" + correo + '\'' +
                 ", telefono=" + telefono +
+                ", direccion=" + direccion +
                 '}';
     }
-
-    public Trabajador(){}
 
     public int getId() {
         return id;
