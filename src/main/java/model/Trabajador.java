@@ -4,24 +4,25 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 
-@Entity(name = "trabajadores")
+@Entity
+@Table(name = "trabajadores")
 public class Trabajador implements Serializable {
 
     //pk
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
+    @Column
     private String nombre;
 
-    @Column(name = "surename")
+    @Column
     private String apellido;
 
     @Column
     private String correo;
 
-    @Column(name = "phone")
+    @Column
     private int telefono;
 
     public Trabajador(int telefono, String correo, String apellido, String nombre) {
@@ -29,6 +30,17 @@ public class Trabajador implements Serializable {
         this.correo = correo;
         this.apellido = apellido;
         this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return "Trabajador{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", correo='" + correo + '\'' +
+                ", telefono=" + telefono +
+                '}';
     }
 
     public Trabajador(){}
