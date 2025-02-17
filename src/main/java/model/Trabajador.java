@@ -1,22 +1,32 @@
 package model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
-@Entity
-@Table(name = "trabajadores")
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @NamedQueries(
         {
-@NamedQuery(name = "Trabajador.findAll", query="FROM Trabajador"),
-@NamedQuery(name = "Trabajador.findByLocalidad", query = "From Trabajador WHERE direccion.localidad = :localidad"),
+                @NamedQuery(name = "Trabajador.findAll", query = "FROM Trabajador"),
+                @NamedQuery(name = "Trabajador.findByLocalidad", query = "From Trabajador WHERE direccion.localidad = :localidad"),
                 @NamedQuery(
                         name = "Trabajador.findNombreCorreo",
                         query = "SELECT t.nombre, t.correo FROM Trabajador t WHERE t.direccion.localidad = :localidad"
                 )
-})
+        })
 
+
+@Entity
+@Table(name = "trabajadores")
 public class Trabajador implements Serializable {
 
     //pk
@@ -48,7 +58,6 @@ public class Trabajador implements Serializable {
         this.direccion = dir;
     }
 
-    public Trabajador(){}
 
     @Override
     public String toString() {
@@ -62,43 +71,13 @@ public class Trabajador implements Serializable {
                 '}';
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_habitacion")
+    private Habitacion habitacion;
 
-    public String getNombre() {
-        return nombre;
-    }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    @ManyToMany(mappedBy = "listaTrabajadores")
+    private List<Cliente> listaClientes;
 
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public int getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
-    }
 }
